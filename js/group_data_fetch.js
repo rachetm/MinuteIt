@@ -40,8 +40,8 @@ function display_mem_select(group)
                 else if (data == "empty")
                 {
                     document.getElementById("savebtn").disabled = true;
-                    document.getElementById("names").innerHTML = `<p style='color: grey; font-size: 15px; padding-left:15px;'><b>No members present in this group.
-                    You can add memebers by going to 'Manage Group Members' above.</b></p>`;
+                    document.getElementById("names").innerHTML = `<p style='color: grey; font-size: 15px; padding-left:15px;'>No members present in this group.
+                    <b>You can add memebers by going to 'Manage Group Members' above.</b></p>`;
                 }
                 else 
                 {
