@@ -9,8 +9,17 @@
             $stmt = $con->prepare("SELECT * FROM `group_names`");
             $stmt->execute();
             $result = $stmt->get_result();
-            $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            echo json_encode($data);
+
+            if($result->num_rows == 0)
+            {
+                echo "empty";
+                exit();
+            }
+            else
+            {
+                $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                echo json_encode($data);
+            }
         }
         else
         {

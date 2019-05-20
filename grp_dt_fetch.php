@@ -45,8 +45,17 @@
             if($stmt->execute())
             {
                 $result = $stmt->get_result();
-                $mems = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                echo json_encode($mems);
+                
+                if($result->num_rows == 0)
+				{
+					echo "empty";
+					exit();
+				}
+				else
+				{
+                    $mems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    echo json_encode($mems);
+                }
             }
             else 
             {

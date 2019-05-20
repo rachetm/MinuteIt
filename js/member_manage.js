@@ -96,7 +96,11 @@ function manage_members()
         if (data == "error")
         {
             document.getElementById("mem_rmv_form").innerHTML = "<p style='color: red; font-size: 15px;'><b>Error fetching data!</b></p>";
-        } 
+        }
+        else if (data == "empty")
+        {
+            document.getElementById("mem_rmv_form").innerHTML = "<p style='color: grey; font-size: 15px;'><b>No members to remove</b><br></p>";
+        }
         else 
         {
             let members = JSON.parse(data);

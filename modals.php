@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <span id="mem_msgmod"></span>
                 <ul class="nav nav-fill nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item active" onclick="manage_members()">
+                    <li class="nav-item active">
                         <a class="nav-link active" id="pills-add-tab" data-toggle="pill" href="#pills_mem_add" role="tab">Add</a>
                     </li>
                     <li class="nav-item" onclick="manage_members()">
@@ -84,7 +84,7 @@
             <div class="modal-body">
                 <span id="grp_msgmod"></span>
                 <ul class="nav nav-fill nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item active" onclick="manage_groups()">
+                    <li class="nav-item active">
                         <a class="nav-link active" id="pills-add-tab" data-toggle="pill" href="#pills_grp_add" role="tab">Add</a>
                     </li>
                     <li class="nav-item " onclick="manage_groups()">

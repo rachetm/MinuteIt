@@ -32,13 +32,20 @@ function disp_members(group)
     
     if (group == "nav") 
     {
+        document.getElementById("pills").innerHTML = "";
         $.ajax({
             type: "GET",
             url: "get_groups.php",
             success: function (data, status) {
                 if (data == "error") {
-                    document.getElementById("pills-tab-grp").innerHTML = "<li><p style='color: red; font-size: 15px;'><b>Error fetching groups!</b></p></li>";
-                } else {
+                    document.getElementById("pills").innerHTML = "<p style='color: red; font-size: 15px;'><b>Error fetching groups!</b></p>";
+                } 
+                else if(data == "empty")
+                {
+                    document.getElementById("pills").innerHTML = "<p style='color: red; font-size: 15px;'><b>No groups present</b></p>";
+                }
+                else 
+                {
                     let groups = JSON.parse(data);
                     var res_string = '';
                     var i = 0;
@@ -54,11 +61,11 @@ function disp_members(group)
 
             },
             error: function (x, s, err) {
-                document.getElementById("pills-tab-grp").innerHTML = "<li><p style='color: red; font-size: 15px;'><b>Error fetching groups!</b></p></li>";
+                document.getElementById("pills").innerHTML = "<p style='color: red; font-size: 15px;'><b>Error fetching groups!</b></p>";
             }
         });
         document.getElementById("msgmod").innerHTML = "<p style='color: grey; font-size: 14px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;'><b>Select a group</b></p>";
-        document.getElementById("pills").innerHTML = "";
+        
         $('.grp_pills').each(function () {
             $(this).removeClass("active");
         });
@@ -121,7 +128,7 @@ function disp_members(group)
                 }
             },
             error: function (x, s, err) {
-                document.getElementById("pills").innerHTML = "<p style='color: grey; font-size: 15px;'><b>Error fetching data!</b><br>" + s + " " + err + "</p>";
+                document.getElementById("pills").innerHTML = "<p style='color: grey; font-size: 15px;'><b>Error fetching data!</b></p>";
             }
         });
     }
