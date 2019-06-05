@@ -9,7 +9,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         $stmt = $con->prepare("SELECT `grp_name` FROM `group_names`");
         if ($stmt->execute()) {
             $res_str = '<select class="form-control custom-select" name="group_selection" id="groups">
-                        <option value="">--None--</option>';
+                        <option value="">--Select--</option>';
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
                 $name = strtoupper($row['grp_name']);
@@ -132,35 +132,42 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                         </div>
                     </div>
 
-                    <div class="form-row margin-top">
-                        <div class="col-lg-12">
-                            <div class="col-lg-6 col-sm-12 col-md-12">
-                                <label class="meet_form_label" for="group"><b>Select Group to send e-mails to : </b></label>
-                            </div>
-                            <div class="col-lg-4 col-sm-12 col-md-12">
-                                <?php disp_grps($con); ?>
-                            </div>
-                            <div class="col-lg-6 col-sm-12 col-md-12 mt-2">
-                                <span id='errmsg' style="color: red;"></span>
-                            </div>
+                    <div class="form-row margin-top ml-4">
+                        <div class="col-xs-12">
+                            <input type="checkbox" class="form-check-input" name="mail_check" id="mail_check_input" value="1" onclick="mailCheck(this);" checked><b>Send emails<small class="ml-2">(Untick to not send)</small></b>
                         </div>
                     </div>
 
-                    <div class="form-row margin-top pl-2">
-                        <div class="col-lg-12">
-                            <div id="names">
+                    <div id="mail_details">
+                        <div class="form-row margin-top">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 col-sm-12 col-md-12">
+                                    <label class="meet_form_label" for="group"><b>Select Group to send e-mails to : </b></label>
+                                </div>
+                                <div class="col-lg-4 col-sm-12 col-md-12">
+                                    <?php disp_grps($con); ?>
+                                </div>
+                                <div class="col-lg-6 col-sm-12 col-md-12 mt-2">
+                                    <span id='errmsg' style="color: red;"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="col-lg-4">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <label class="meet_form_label" for="password" class="input-custom" style="padding-right: 2px;"><b>Password</b> for
-                                    <u><b>minuteit.ise@gmail.com</b></u></label>
+                        <div class="form-row margin-top pl-2">
+                            <div class="col-lg-12">
+                                <div id="names">
+                                </div>
                             </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <input class="form-control" type="password" name="password" required="">
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-4">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label class="meet_form_label" for="password" class="input-custom" style="padding-right: 2px;"><b>Password</b> for
+                                        <u><b>minuteit.ise@gmail.com</b></u></label>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <input class="form-control" id="pwd" type="password" name="password" required="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,6 +188,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         </div>
 
         <script src="src/jquery-3.3.1.min.js"></script>
+        <script src="js/save_circular.js"></script>
         <script src="js/formatting.js"></script>
         <script src="js/add_rmv_group.js"></script>
         <script src="js/group_data_fetch.js"></script>

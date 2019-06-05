@@ -9,7 +9,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         $stmt = $con->prepare("SELECT `grp_name` FROM `group_names`");
         if ($stmt->execute()) {
             $res_str = '<select class="form-control custom-select" name="group_selection" id="groups">
-                            <option value="">--None--</option>';
+                            <option value="">--Select--</option>';
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
                 $name = strtoupper($row['grp_name']);

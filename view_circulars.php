@@ -89,7 +89,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
     function display($con)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $stmt = $con->prepare("SELECT * FROM `circulars` WHERE `c_date` = ? ORDER BY `c_id` DESC");
+            $stmt = $con->prepare("SELECT * FROM `circulars` WHERE `c_date` = ? ORDER BY `c_date` DESC, `m_date` DESC");
             $date = $_POST['datepick'];
             $stmt->bind_param("s", $date);
             $stmt->execute();
@@ -102,7 +102,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                 }
             }
         } else {
-            $stmt = $con->prepare("SELECT * FROM `circulars` ORDER BY `c_id` DESC");
+            $stmt = $con->prepare("SELECT * FROM `circulars` ORDER BY `c_date` DESC, `m_date` DESC");
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {

@@ -29,15 +29,30 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true)
         if (!$stmt1->execute())
         {
             echo "error";
-            // echo $stmt1->error;
             exit();
         }
         else 
         {
-            // echo "success";
-            // echo "save_success";
-            send_emails($c_id);
-            //exit();
+            if(isset($_POST['mail_check']) && $_POST['mail_check'] == 0)
+            {
+                // echo "save_success";
+                $_SESSION['message'] = "Circular has been saved successfully";
+                $_SESSION['type'] = 'success';
+                header('Location: ./home.php');
+                exit();
+            }
+            else
+            {
+                if(count($_POST['attendees']) > 0)
+                    send_emails($c_id);
+                else 
+                {
+                    $_SESSION['message'] = "Circular has been saved successfully. No mails were sent.";
+                    $_SESSION['type'] = 'success';
+                    header('Location: ./home.php');
+                    exit();
+                }
+            }
         }
     } 
     else 
@@ -119,11 +134,11 @@ function send_emails($c_id)
         $mail->clearAttachments();
         unlink($file_name);
 
-        echo "success";
-        // $_SESSION['message'] = "E-mails have been successfully sent!";
-        // $_SESSION['type'] = 'success';
-        // header('Location: ./home.php');
-        // exit();
+        // echo "success";
+        $_SESSION['message'] = "Circular saved and e-mails have been successfully sent!";
+        $_SESSION['type'] = 'success';
+        header('Location: ./home.php');
+        exit();
     }
 }
 
@@ -131,7 +146,6 @@ function circularDoc()
 {
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-    // $circ = get_circular_details($con, $c_id, $attachment);
     $date = dateConvert($_POST['cdatepick']);
 
     $temp_file_uri = tempnam('tmp/', 'cir');

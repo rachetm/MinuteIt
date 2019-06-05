@@ -49,7 +49,7 @@ function display_mem_select(group)
                     var res_string = '';
                     var i = 0;
                     while (resultvar[i]) {
-                        res_string += "<div class=\"form-row form-group ml-1\"> <label class=\"names\" id=\"lbl_" + resultvar[i].fac_id + "\" for=\"" + resultvar[i].fac_id + "\">" + resultvar[i].fac_name + "</label> <input type=\"hidden\" id=\"h_" + resultvar[i].fac_id + "\" name=names[] value=\"" + resultvar[i].fac_name + "\"> <input type=\"hidden\" id=\"hh_" + resultvar[i].fac_id + "\" name=emails[] value=\"" + resultvar[i].fac_email + "\"> <input type=\"checkbox\" class=\"form-check-input col-lg-6 ml-3\" id=\"" + resultvar[i].fac_id + "\" name=\"attendees[]\" value=\"" + resultvar[i].fac_id + "\"checked onclick=\"add_rm(this)\"> </div>";
+                        res_string += "<div class=\"form-row form-group ml-1\"> <label class=\"names\" id=\"lbl_" + resultvar[i].fac_id + "\" for=\"" + resultvar[i].fac_id + "\">" + resultvar[i].fac_name + "</label> <input type=\"hidden\" id=\"h_" + resultvar[i].fac_id + "\" name=names[] value=\"" + resultvar[i].fac_name + "\"> <input type=\"hidden\" id=\"hh_" + resultvar[i].fac_id + "\" name=emails[] value=\"" + resultvar[i].fac_email + "\"> <input type=\"checkbox\" class=\"form-check-input col-lg-6 ml-3\" id=\"" + resultvar[i].fac_id + "\" name=\"attendees[]\" value=\"" + resultvar[i].fac_id + "\" checked onclick=\"add_rm(this)\"> </div>";
                         i++;
                     }
                     document.getElementById("names").innerHTML = res_string;
@@ -66,10 +66,10 @@ function display_mem_select(group)
 
 function add_rm(checkbox)
 {
-    let $temp;
-    checkbox.checked ? $temp = 1 : $temp = 0;
+    let temp;
+    checkbox.checked ? temp = 1 : temp = 0;
 
-    if($temp)
+    if(temp)
     {
         document.getElementById("h_" + checkbox.id).disabled = false;
         document.getElementById("hh_" + checkbox.id).disabled = false;

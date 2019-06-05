@@ -48,12 +48,12 @@
 						<form action="login.php" method="post">
 							<div class="row form-row container form-group">
 								<label for="username">Username</label>
-								<input type="text" class="form-control field" name="username" required autofocus>
+								<input type="text" class="form-control field" name="username" value="test" required autofocus>
 							</div>
 
 							<div class="row form-row container form-group">
 								<label for="password">Password</label>
-								<input type="password" class=" field form-control" name="password" required>
+								<input type="password" class=" field form-control" name="password" value="test" required>
 							</div>
 							
 							<div class="row form-row container form-group">
