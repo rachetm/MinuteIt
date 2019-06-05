@@ -50,11 +50,12 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                 // $mail->FromName = $From_name;
 
 
-                $mail->addReplyTo($mail_from, 'No-reply');
+                $mail->addReplyTo($mail_from, 'MinuteIt - ISE');
                 $mail->addAddress($mail_to, "");
                 $mail->Subject = $mail_sub;
                 $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
                 $mail->Body = $mail_content;
+                $mail->IsHTML(true);
 
                 if ($mail->send()) {
                     return 1;
@@ -155,27 +156,27 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                 <div class="form-group">
                     <div class="row form-row form-group">
                         <div class="col-lg-4 col-sm-auto col-md-auto">
-                            <label for="mail_to">To :</label>
+                            <label for="mail_to">To</label>
                             <input type="text" class="form-control field" class="email" name="mail_to" required autofocus>
                         </div>
                         <div class="col-lg-4 col-sm-auto col-md-auto">
-                            <label for="mail_from">Your email :</label>
+                            <label for="mail_from">Your email</label>
                             <input type="text" class="form-control field" class="email" name="mail_from" value="minuteit.ise@gmail.com" required>
                         </div>
                         <div class="col-lg-4 col-sm-auto col-md-auto">
-                            <label for="password">Password of your email account :</label>
+                            <label class="meet_form_label" for="password" class="input-custom" style="padding-right: 2px;">Password for your email</label>
                             <input type="password" class="form-control field" name="password" required>
                         </div>
                     </div>
 
 
                     <div class="row form-row form-group">
-                        <label for="subject">Subject :</label>
+                        <label for="subject">Subject</label>
                         <input type="text" class="form-control field" name="subject" required>
                     </div>
 
                     <div class="row form-row form-group">
-                        <label for="mail_body">Body :</label>
+                        <label for="mail_body">Body</label>
                         <textarea class="form-control" name="mail_body" id="mail_body" cols="135" rows="25" required></textarea>
                     </div>
 

@@ -3,26 +3,28 @@ html{
 }
 
 body{
-	background-image: url('../images/1.jpg');
+	background-image: url('../images/bg2.png');
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
 h1{
-	padding-top: 15%; 
+	padding-top: 15%;
 	text-align: center;
 	font-size: 40px !important;
 	font-family: Lato;
 	letter-spacing: 1px;
 	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 	color: white;
+	letter-spacing: 2px;
+	/* text-transform: uppercase; */
 }
 
 hr{
 	border: 1px;
 	height: 2px;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	background-color: white;
 }
 
 .btn{
@@ -49,7 +51,7 @@ a, a:active, a:focus {
 
 .formcontainer{
 	padding: 10px 0px 10px 10px;
-	background-color: rgba(255, 255, 255, 0.95);
+	background-color: rgba(255, 255, 255);
 	box-shadow: 0px 0px 4px 0.5px rgba(112, 112, 112, 0.3);
 	border-radius: 5px;
 }
@@ -57,8 +59,9 @@ a, a:active, a:focus {
 label{
 	margin-top: 10px;
 	font-family: -apple-system, sans-serif;
-	font-weight: bold;
+	font-weight: normal;
 	font-size: 14px;
+	color: rgba(0, 0, 0, 0.5)
 }
 
 .row{

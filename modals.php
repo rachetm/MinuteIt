@@ -201,15 +201,15 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-start">
                 <form class="form-inline" action="docGenerate.php" method="POST">
-                    <input type="hidden" id="mid" name="mid">
-                    <input type="hidden" id="docType" name="docType" value="action">
-                    <button class="btn btn-info" type="submit"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
+                    <input type="hidden" id="mid" name="id">
+                    <input type="hidden" name="type" value="action">
+                    <button class="btn btn-info" type="submit" id="doc_download_action"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
                 </form>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success" id="action_add_btn" onclick="add_action()">Confirm</button>
             </div>
         </div>
     </div>
-</div> 
+</div>

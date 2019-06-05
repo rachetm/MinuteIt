@@ -1,5 +1,4 @@
 <?php
-
     session_start();
 
     require_once 'include/db.php';
@@ -7,37 +6,52 @@
 
     date_default_timezone_set('Asia/Kolkata');
 
-    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true)
+    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true)
     {
-        if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
+        $page = $_SERVER['HTTP_REFERER'];
+        // $page = explode('/',$_SERVER[ 'HTTP_REFERER'])[3];
+
+        if ( $_SERVER['REQUEST_METHOD'] === 'POST' )
         {
-            if(isset($_POST['docType']))
+
+            if(isset($_POST['type']))
             {
-                if($_POST['docType'] == "circular")
+                if($_POST['type'] === "circular")
                     circularDoc($con);
-                elseif ($_POST['docType'] == "minutes")
+                elseif ($_POST['type'] === "meeting")
                     minuteDoc($con);
-                elseif  ($_POST['docType'] == "action")
+                elseif  ($_POST['type'] === "action")
                     actionDoc($con);
                 else
-                    echo "error";
+                {
+                    $_SESSION['message'] = "Something went wrong! Please try again.";
+                    $_SESSION['type'] = 'danger';
+                    header('Location: '.$page);
+                    exit();
+                }
             }
             else 
             {
-                echo "error";
+                $_SESSION['message'] = "Something went wrong! Please try again.";
+                $_SESSION['type'] = 'danger';
+                header('Location: '.$page);
+                exit();
             }
-
         }
         else 
         {
-            echo "error";
-            return;
+            $_SESSION['message'] = "Something went wrong! Please try again.";
+            $_SESSION['type'] = 'danger';
+            header('Location: '.$page);
+            exit();
         }
     }
     else 
     {
-        echo "error";
-        return;
+        $_SESSION['message'] = "You are logged out. Please login to continue!";
+        $_SESSION['type'] = 'danger';
+        header('Location: ./index.php');
+        exit();
     }
 
     // ########-------- MINUTE DOC --------########
@@ -49,7 +63,8 @@
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $file = $date.'_Minutes_'.$meet['m_id'].'.docx';
+        $file = str_replace('/', '-', $date).' - Proceedings.docx';
+
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $file . '"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -170,7 +185,8 @@
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $file = $date.'_Action Taken_'.$_POST['mid'].'.docx';
+        $file = str_replace('/','-',$dt).' - Action Taken.docx';
+
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $file . '"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -231,15 +247,18 @@
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('php://output');
     }
+
+
 // #########---------- CIRCULAR DOC ----------##########
     function circularDoc($con)
     {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        
         $circ = get_circular_details($con);
         $date = dateConvert($circ['c_date']);
 
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $file = str_replace('/', '-', $date).' - Circular.docx';
 
-        $file = $date.'_Circular_'.$circ['c_id'].'.docx';
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $file . '"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -247,7 +266,6 @@
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
 
-        
         $section = $phpWord->addSection();
 
         $section->addText(
@@ -346,18 +364,16 @@
             array('name' => 'Times New Roman', 'size' => 12, 'bold' => true),
             array('alignment' => 'right', 'spaceBefore' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(15))
         );
-
-
+          
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('php://output');
-
+        echo $objWriter->save('php://output');
     }
 
     function get_circular_details($con)
     {
             $stmt = $con->prepare("SELECT * FROM `circulars` WHERE `c_id` = ?");
-            $stmt->bind_param("i",$_POST['c_id']);
+            $stmt->bind_param("i",$_POST['id']);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
@@ -368,10 +384,10 @@
     function get_meet_details($con)
     {
             $stmt = $con->prepare("SELECT * FROM `meetings` WHERE `m_id` = ?");
-            if(isset($_POST['docType']) && $_POST['docType'] == "action")
-                $stmt->bind_param("i",$_POST['mid']);
+            if(isset($_POST['type']) && $_POST['type'] === "action")
+                $stmt->bind_param("i",$_POST['id']);
             else
-                $stmt->bind_param("i",$_POST['m_id']);
+                $stmt->bind_param("i",$_POST['id']);
 
             $stmt->execute();
             $result = $stmt->get_result();
@@ -383,7 +399,7 @@
     function get_attendees($con)
     {
         $stmt = $con->prepare("SELECT `fac_name` FROM `attendees` WHERE `m_id` = ?");
-        $stmt->bind_param("i", $_POST['m_id']);
+        $stmt->bind_param("i", $_POST['id']);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -393,7 +409,7 @@
     function get_action_details($con)
     {
         $stmt = $con->prepare("SELECT * FROM `actions` WHERE `m_id` = ?");
-        $stmt->bind_param("i", $_POST['mid']);
+        $stmt->bind_param("i", $_POST['id']);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -413,22 +429,23 @@
 
     function timeConvert($time)
     {
-        $explodedTime = explode(":",$time);
-        $suffix = " a.m.";
+        $explodedTime = explode(":", $time);
+        $suffix = " a.m";
 
-        if($explodedTime[0]>12)
-        {
-            $time = $explodedTime[0]-12;
-            $suffix = " p.m.";
+        if ($explodedTime[0] > 12) {
+            $time = ($explodedTime[0] - 12) % 10;
+            $time .= ":" . $explodedTime[1];
+            $suffix = " p.m";
+        } else {
+            $time = $explodedTime[0] % 10;
+            $time .= ":" . $explodedTime[1];
         }
-        else
-            $time = $explodedTime[0];
-        
-        if($time == 12)
-            $time .= " p.m.";
+
+        if ($time == 12)
+            $time .= " p.m";
         else
             $time .= $suffix;
-        
+
         return $time;
     }
 

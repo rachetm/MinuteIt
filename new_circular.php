@@ -153,6 +153,18 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="col-lg-4">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <label class="meet_form_label" for="password" class="input-custom" style="padding-right: 2px;"><b>Password</b> for
+                                    <u><b>minuteit.ise@gmail.com</b></u></label>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <input class="form-control" type="password" name="password" required="">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-row margin-top">
                         <div class="col-lg-4 col-sm-4">
                         </div>
@@ -160,7 +172,8 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                             <button type="button" class="btn btn-danger btn-custom" onclick="window.location.href='home.php'">Cancel</button>
                         </div>
                         <div class="col-lg-4 col-sm-4">
-                            <input type="submit" class="btn btn-success btn-custom" onclick="save_circular()" value="Save" id='savebtn'>
+                            <!-- <input type="submit" class="btn btn-success btn-custom" onclick="save_circular()" value="Save" id='savebtn'> -->
+                            <input type="submit" class="btn btn-success btn-custom" value="Save" id='savebtn'>
                         </div>
                     </div>
                 </form>

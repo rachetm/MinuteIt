@@ -35,91 +35,92 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                 unset($_SESSION['message']);
             }
             ?>
-        </div>
 
-        <!-- <div class="opcontainer">
-                    <a href="new_circular.php">
-                        <div class="row" id="a">
-                            <div class="col-sm-12 col-lg-12 optionscol1">
-                                <span class="fa fa-plus" id='cal'></span>
-                                <p>New circular</p>
-                            </div>
-                        </div>
-                    </a>
 
-                    <a href="view_circulars.php">
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-12 optionscol1">
-                                <span class="fa fa-file-alt" id='cal'></span>
-                                <p>View previous circulars</p>
+            <!-- <div class="opcontainer">
+                        <a href="new_circular.php">
+                            <div class="row" id="a">
+                                <div class="col-sm-12 col-lg-12 optionscol1">
+                                    <span class="fa fa-plus" id='cal'></span>
+                                    <p>New circular</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+
+                        <a href="view_circulars.php">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 optionscol1">
+                                    <span class="fa fa-file-alt" id='cal'></span>
+                                    <p>View previous circulars</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="opcontainer mb-5">
+                        <a href="new_meeting.php" onclick="new_meeting()">
+                            <div class="row" id="a">
+                                <div class="col-sm-12 col-lg-12 optionscol">
+                                    <span class="fa fa-plus" id='cal'></span>
+                                    <p>New meeting</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="show_meetings.php">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 optionscol">
+                                    <span class="fa fa-calendar-alt" id='cal'></span>
+                                    <p>View previous meetings</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div> -->
+
+            <div id="opcon">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <a href="new_circular.php">
+                            <div class="card mb-3 optionscol">
+                                <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">New Circular</span></b></div>
+                                <div class="card-body">
+                                    <h1 class="card-title"><i class="fa fa-plus"></i></h1>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <a href="view_circulars.php">
+                            <div class="card mb-3 optionscol">
+                                <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Previous Circulars</span></b></div>
+                                <div class="card-body">
+                                    <h1 class="card-title"><i class="fa fa-file-alt"></i></h1>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="opcontainer mb-5">
-                    <a href="new_meeting.php" onclick="new_meeting()">
-                        <div class="row" id="a">
-                            <div class="col-sm-12 col-lg-12 optionscol">
-                                <span class="fa fa-plus" id='cal'></span>
-                                <p>New meeting</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <a href="new_meeting.php" onclick="new_meeting()">
+                            <div class="card mb-3 optionscol1">
+                                <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">New Meeting</span></b></div>
+                                <div class="card-body">
+                                    <h1 class="card-title"><i class="fa fa-plus"></i></h1>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-
-                    <a href="show_meetings.php">
-                        <div class="row">
-                            <div class="col-sm-12 col-lg-12 optionscol">
-                                <span class="fa fa-calendar-alt" id='cal'></span>
-                                <p>View previous meetings</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <a href="show_meetings.php">
+                            <div class="card mb-3 optionscol1">
+                                <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Previous Meetings</span></b></div>
+                                <div class="card-body">
+                                    <h1 class="card-title"><i class="fa fa-calendar-alt"></i></h1>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div> -->
-
-        <div class="container" id="opcon">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <a href="new_circular.php">
-                        <div class="card mb-3 optionscol">
-                            <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">New Circular</span></b></div>
-                            <div class="card-body">
-                                <h1 class="card-title"><i class="fa fa-plus"></i></h1>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <a href="view_circulars.php">
-                        <div class="card mb-3 optionscol">
-                            <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">View Circulars</span></b></div>
-                            <div class="card-body">
-                                <h1 class="card-title"><i class="fa fa-file-alt"></i></h1>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <a href="new_meeting.php" onclick="new_meeting()">
-                        <div class="card mb-3 optionscol1">
-                            <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">New Meeting</span></b></div>
-                            <div class="card-body">
-                                <h1 class="card-title"><i class="fa fa-plus"></i></h1>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <a href="show_meetings.php">
-                        <div class="card mb-3 optionscol1">
-                            <div class="mt-3"><b><span style="font-size: 18px; font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">View Meetings</span></b></div>
-                            <div class="card-body">
-                                <h1 class="card-title"><i class="fa fa-calendar-alt"></i></h1>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

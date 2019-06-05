@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once 'include/db.php';
+    
     date_default_timezone_set('Asia/Kolkata');
 
     if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true)

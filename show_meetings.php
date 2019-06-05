@@ -15,33 +15,34 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         }
     }
 
-    function meet_deet($con, $row)
+    function meet_deet($con, $row = null)
     {
-        $date = explode("-", $row['date']);
-        $_date = $date[2] . "-" . $date[1] . "-" . $date[0];
+        if ($row != null) {
+            $date = explode("-", $row['date']);
+            $_date = $date[2] . "-" . $date[1] . "-" . $date[0];
 
-        echo '<div class="row" id="meet_' . $row['m_id'] . '">
+            echo '<div class="row" id="meet_' . $row['m_id'] . '">
                     <div class="col-lg-12">
                         <div class="tile">
                             <div class="table-responsive tablecon">
                                 <table class="table table-borderless">
                                     <tbody>
                                         <tr><td><b>Date</b></td><td>' . $_date . '</td></tr>
-                                        <tr><td><b>Time</b></td><td>' . $row['time'] . '</td></tr>
+                                        <tr><td><b>Time</b></td><td>' . timeConvert($row['time']) . '</td></tr>
                                         <tr><td><b>Venue</b></td><td>' . $row['venue'] . '</td></tr>
                                         <tr><td><b>Agenda</b></td><td class="info">' . nl2br($row['agenda']) . '</td></tr>
                                         <tr><td><b>Minutes</b></td><td class="info">' . nl2br($row['minutes']) . '</td></tr>
                                         <tr><td><b>Attendees</b></td><td class="info">';
-        attendees($con, $row['m_id']);
-        echo '</td></tr>
+            attendees($con, $row['m_id']);
+            echo '</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="row float-xl-left">';
-        // <div class="col-auto mb-2">
-        //     <button class="btn btn-danger" type="submit" onclick="confirmation_modal_show(' . $row['m_id'] . ')" disabled><span class="fa fa-trash-alt fa_cus mb-1"></span>Delete</button>
-        // </div>
-        echo '<div class="col-auto">
+            // <div class="col-auto mb-2">
+            //     <button class="btn btn-danger" type="submit" onclick="confirmation_modal_show(' . $row['m_id'] . ')" disabled><span class="fa fa-trash-alt fa_cus mb-1"></span>Delete</button>
+            // </div>
+            echo '<div class="col-auto">
                                     <button class="btn btn-success" type="submit" onclick="action_modal_show(' . $row['m_id'] . ');"><span class="fa fa-check fa_cus mb-1"></span>Action Taken</button>
                                 </div>
                             </div>
@@ -54,9 +55,9 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                                 </div>
                                 <div class="col-auto">
                                     <form class="form-inline" action="docGenerate.php" method="POST">
-                                        <input type="hidden" name="m_id" value="' . $row['m_id'] . '">
-                                        <input type="hidden" id="docType" name="docType" value="minutes">
-                                        <button class="btn btn-info" type="submit"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
+                                        <input type="hidden" name="id" value="' . $row['m_id'] . '">
+                                        <input type="hidden" name="type" value="meeting">
+                                        <button class="btn btn-info doc_download" type="submit"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
                                     </form>
                                 </div>
                             </div>
@@ -64,6 +65,22 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                     </div>
                 </div>
             <div class="border-top my-3 mx-5" id="meet_' . $row['m_id'] . '_hr' . '"></div>';
+        } else {
+            $date = explode("-", $_POST['datepick']);
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+
+            echo '<div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive tablecon">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr><td style="text-align:center">No records found for <b>' . $date . '</b></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>';
+        }
     }
 
     function display($con)
@@ -74,7 +91,9 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
             $stmt->bind_param("s", $date);
             $stmt->execute();
             $result = $stmt->get_result();
-            if ($result->num_rows == 0) { } else {
+            if ($result->num_rows == 0) {
+                meet_deet($con, null);
+            } else {
                 while ($row = $result->fetch_assoc()) {
                     meet_deet($con, $row);
                 }
@@ -170,6 +189,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         <script src="js/modal_autofocus.js"></script>
         <script src="js/persistentFormData.js"></script>
         <script src="js/del_meeting.js"></script>
+        <script src="js/docGenerate.js"></script>
         <script src="src/popper.min.js"></script>
         <script src="src/bootstrap.min.js"></script>
         <script>
@@ -209,5 +229,27 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
     $_SESSION['message'] = "You are logged out. Please login to continue!";
     $_SESSION['type'] = 'danger';
     header('Location: ./index.php');
+}
+
+function timeConvert($time)
+{
+    $explodedTime = explode(":", $time);
+    $suffix = " a.m";
+
+    if ($explodedTime[0] > 12) {
+        $time = ($explodedTime[0] - 12) % 10;
+        $time .= ":" . $explodedTime[1];
+        $suffix = " p.m";
+    } else {
+        $time = $explodedTime[0] % 10;
+        $time .= ":" . $explodedTime[1];
+    }
+
+    if ($time == 12)
+        $time .= " p.m";
+    else
+        $time .= $suffix;
+
+    return $time;
 }
 ?>

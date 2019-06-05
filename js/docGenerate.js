@@ -1,77 +1,39 @@
-var id;
+$('.doc_download').click(() => {
 
-function docGen(m_id)
-{
-    id = m_id;
-    // console.log(id);
-    $.ajax({
-            url: 'docGenerate.php',
-            data: {m_id: id},
-            type: 'POST',
-        })
-        .done(function (data, status) 
-        {
-            if (data == "error") 
-            {
-                $('html, body').animate({
-                    scrollTop: 0
-                }, 'slow');
-                document.getElementById("msg").innerHTML = "<div class='alert alert-danger'>Something went wrong! Please try again.</div>";
+        $('html, body').animate({
+            scrollTop: 0
+        }, 'fast');
+        
+        document.getElementById("msg").innerHTML = "<div class='alert alert-success'>File will begin downloading shortly</div>";
 
-                setTimeout(() => {
-                    $("#msg").animate({
-                        opacity: 0
-                    }, 'slow');
-                }, 4000);
+    setTimeout(() => {
+        $("#msg").animate({
+            opacity: 0
+        }, 'slow');
+    }, 10000);
 
-                setTimeout(() => {
-                    document.getElementById("msg").innerHTML = "";
-                    $("#msg").animate({
-                        opacity: 1
-                    });
-                }, 5000);
-            }
-            else
-            {
-                setTimeout(() => {
-                    $('html, body').animate({
-                        scrollTop: 0
-                    }, 'slow');
-                    document.getElementById("msg").innerHTML = "<div class='alert alert-success'>File will download shortly</div>";
-                }, 1000);
-
-                setTimeout(() => {
-                    $("#msg").animate({
-                        opacity: 0
-                    }, 'slow');
-                }, 4000);
-
-
-                setTimeout(() => {
-                    document.getElementById("msg").innerHTML = "";
-                    $("#msg").animate({
-                        opacity: 1
-                    });
-                }, 5000);
-            }
-        })
-        .fail(function (data, status) {
-            document.getElementById("msg").innerHTML = "<div class='alert alert-danger'>Something went wrong! Please try again.</div>";
-            $('html, body').animate({
-                scrollTop: 0
-            }, 'slow');
-
-            setTimeout(() => {
-                $("#msg").animate({
-                    opacity: 0
-                }, 'slow');
-            }, 4000);
-
-            setTimeout(() => {
-                document.getElementById("msg").innerHTML = "";
-                $("#msg").animate({
-                    opacity: 1
-                });
-            }, 5000);
+    setTimeout(() => {
+        document.getElementById("msg").innerHTML = "";
+        $("#msg").animate({
+            opacity: 1
         });
-}
+    }, 10200);
+});
+
+$('#doc_download_action').click(() => {
+
+    document.getElementById("act_msgmod").innerHTML = "<div class='alert alert-success'>File will begin downloading shortly</div>";
+
+    setTimeout(() => {
+        $("#act_msgmod").animate({
+            opacity: 0
+        }, 'slow');
+    }, 10000);
+
+    setTimeout(() => {
+        document.getElementById("act_msgmod").innerHTML = "";
+        $("#act_msgmod").animate({
+            opacity: 1
+        });
+    }, 10200);
+});

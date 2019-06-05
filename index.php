@@ -27,10 +27,9 @@
 		<div class="container">
 			<div class="row">
 				<div  class="col-sm-12 col-md-6 col-lg-4">
-					<h1>MinuteIt</h1><hr>
+					</div>
 				</div>
-			</div>
-				
+				<h1>MinuteIt</h1><hr>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 col-lg-4">
 					  <?php

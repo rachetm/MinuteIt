@@ -62,7 +62,6 @@ function load_saved_action(id)
             }
             else
             {
-                console.log("duckdjv");
                 var now = new Date();
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -88,7 +87,6 @@ function load_saved_action(id)
 function add_action()
 {
     var form_data = $("#action_form").serializeArray();
-    // form_data.push({name: 'm_id', value: id});
 
     $.ajax({
         url: 'add_action.php',

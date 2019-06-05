@@ -33,5 +33,3 @@ else
         header('Location: ./index.php');
     }
 }
-
-//minuteit@nmit1245

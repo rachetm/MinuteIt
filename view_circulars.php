@@ -4,26 +4,16 @@ require_once 'include/db.php';
 date_default_timezone_set('Asia/Kolkata');
 
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-    // function attendees($con, $m_id)
-    // {
-    //     $stmt = $con->prepare("SELECT `fac_name` FROM `attendees` WHERE `m_id` = ?");
-    //     $stmt->bind_param("i", $m_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     while ($row = $result->fetch_assoc()) {
-    //         echo $row['fac_name'] . '<br>';
-    //     }
-    // }
-
-    function circ_deet($con, $row)
+    function circ_deet($row = null)
     {
-        $date = explode("-", $row['c_date']);
-        $c_date = $date[2] . "-" . $date[1] . "-" . $date[0];
+        if ($row != null) {
+            $date = explode("-", $row['c_date']);
+            $c_date = $date[2] . "-" . $date[1] . "-" . $date[0];
 
-        $date = explode("-", $row['m_date']);
-        $m_date = $date[2] . "-" . $date[1] . "-" . $date[0];
+            $date = explode("-", $row['m_date']);
+            $m_date = $date[2] . "-" . $date[1] . "-" . $date[0];
 
-        echo '<div class="row" id="circ_' . $row['c_id'] . '">
+            echo '<div class="row" id="circ_' . $row['c_id'] . '">
                     <div class="col-lg-12">
                         <div class="tile">
                             <div class="table-responsive tablecon">
@@ -33,22 +23,22 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                                         <tr><td><b>Agenda</b></td><td class="info">' . nl2br($row['agenda']) . '</td></tr>
                                         <tr><td><b>Venue</b></td><td>' . $row['venue'] . '</td></tr>
                                         <tr><td><b>Meeting Date</b></td><td>' . $m_date . '</td></tr>
-                                        <tr><td><b>Meeting Time</b></td><td>' . $row['time'] . '</td></tr>';
-        echo '</tbody>
+                                        <tr><td><b>Meeting Time</b></td><td>' . timeConvert($row['time']) . '</td></tr>';
+            echo '</tbody>
                                 </table>
                             </div>
-                            <div class="row float-xl-right">
-                                <div class="col-auto mb-2">
-                                    <form class="form-inline" action="email_circ.php" method="GET">
-                                        <input type="hidden" name="c_id" value=' . $row['c_id'] . '>
-                                        <button class="btn btn-warning" type="submit"><span class="fa fa-envelope fa_cus mb-1"></span>Email</button>
-                                    </form>
-                                </div>
-                                <div class="col-auto">
+                            <div class="row float-xl-right">';
+            // <div class="col-auto mb-2">
+            //     <form class="form-inline" action="email_circ.php" method="GET">
+            //         <input type="hidden" name="c_id" value=' . $row['c_id'] . '>
+            //         <button class="btn btn-warning" type="submit"><span class="fa fa-envelope fa_cus mb-1"></span>Email</button>
+            //     </form>
+            // </div>
+            echo '<div class="col-auto">
                                     <form class="form-inline" action="docGenerate.php" method="POST">
-                                        <input type="hidden" name="c_id" value="' . $row['c_id'] . '">
-                                        <input type="hidden" id="docType" name="docType" value="circular">
-                                        <button class="btn btn-info" type="submit"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
+                                        <input type="hidden" name="id" value="' . $row['c_id'] . '">
+                                        <input type="hidden" name="type" value="circular">
+                                        <button class="btn btn-info doc_download" type="submit"><span class="fa fa-file-word fa_cus mb-1"></span>Download</button>
                                     </form>
                                 </div>
                             </div>
@@ -56,6 +46,44 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
                     </div>
                 </div>
             <div class="border-top my-3 mx-5" id="meet_' . $row['c_id'] . '_hr' . '"></div>';
+        } else {
+            $date = explode("-", $_POST['datepick']);
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+
+            echo '<div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive tablecon">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr><td style="text-align:center">No records found for <b>' . $date . '</b></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>';
+        }
+    }
+
+    function timeConvert($time)
+    {
+        $explodedTime = explode(":", $time);
+        $suffix = " a.m";
+
+        if ($explodedTime[0] > 12) {
+            $time = ($explodedTime[0] - 12) % 10;
+            $time .= ":" . $explodedTime[1];
+            $suffix = " p.m";
+        } else {
+            $time = $explodedTime[0] % 10;
+            $time .= ":" . $explodedTime[1];
+        }
+
+        if ($time == 12)
+            $time .= " p.m";
+        else
+            $time .= $suffix;
+
+        return $time;
     }
 
     function display($con)
@@ -66,9 +94,11 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
             $stmt->bind_param("s", $date);
             $stmt->execute();
             $result = $stmt->get_result();
-            if ($result->num_rows == 0) { } else {
+            if ($result->num_rows == 0) {
+                circ_deet(null);
+            } else {
                 while ($row = $result->fetch_assoc()) {
-                    circ_deet($con, $row);
+                    circ_deet($row);
                 }
             }
         } else {
@@ -76,7 +106,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
-                circ_deet($con, $row);
+                circ_deet($row);
             }
         }
     }
@@ -161,7 +191,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
         <script src="js/add_action.js"></script>
         <script src="js/modal_autofocus.js"></script>
         <script src="js/persistentFormData.js"></script>
-        <script src="js/del_meeting.js"></script>
+        <script src="js/docGenerate.js"></script>
         <script src="src/popper.min.js"></script>
         <script src="src/bootstrap.min.js"></script>
         <script>
