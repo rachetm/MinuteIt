@@ -65,26 +65,47 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
     }
 
     function timeConvert($time)
-    {
-        $explodedTime = explode(":", $time);
-        $suffix = " a.m";
+{
+    $explodedTime = explode(":", $time);
+    // $suffix = " a.m";
 
-        if ($explodedTime[0] > 12) {
+    if ($explodedTime[0] > 12) 
+    {
+        if( ($explodedTime[0] >= 22 ))
+        {
+            $time = ($explodedTime[0] - 12);
+            $time .= ":".$explodedTime[1];
+            $suffix = " p.m";
+        }
+        else 
+        {
             $time = ($explodedTime[0] - 12) % 10;
             $time .= ":" . $explodedTime[1];
             $suffix = " p.m";
-        } else {
+        }
+    } 
+    else if ($explodedTime[0] <= 12)
+    {
+        if( ($explodedTime[0]) >= 10)
+        {
+            $time = $explodedTime[0];
+            $time .= ":".$explodedTime[1];
+            if($explodedTime[0] == 12)
+                $suffix = " p.m";
+            else
+                $suffix = " a.m";
+        }
+        else {
             $time = $explodedTime[0] % 10;
             $time .= ":" . $explodedTime[1];
+            $suffix = " a.m";
         }
-
-        if ($time == 12)
-            $time .= " p.m";
-        else
-            $time .= $suffix;
-
-        return $time;
     }
+
+    $time .= $suffix;
+
+    return $time;
+}
 
     function display($con)
     {
