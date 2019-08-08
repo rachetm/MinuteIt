@@ -23,9 +23,9 @@
                 <li class="nav-item" style="margin-right: 5px;">
                     <a class="nav-link" data-toggle="modal" data-target="#chgpwd"><span class="fa fa-key fa_cus"></span>Change Password</a>
                 </li>
-                <li class="nav-item" style="margin-right: 5px;">
+<!--                 <li class="nav-item" style="margin-right: 5px;">
                     <a class="nav-link" href="minuteit.apk" target="_blank"><span class="fab fa-google-play fa_cus"></span>Download App</a>
-                </li>
+                </li> -->
                 <hr>
                 <a id="logout" href="logout.php" class="btn btn-danger nav-link"><span class="fa fa-sign-out-alt fa_cus mb-1"></span>Log Out</a>
             </ul>
